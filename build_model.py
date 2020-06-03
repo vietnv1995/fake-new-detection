@@ -10,7 +10,7 @@ class FakeNewClassifier:
         self.path_to_embedding = path_to_embedding
         self.read_data()
         self.knExtraction = knowledgeExtraction.KnowledgeExtraction()
-        self.nbrs = NearestNeighbors(n_neighbors=2, algorithm='ball_tree')
+        self.nbrs = pickle.load(open("model.pkl", "rb"))
 
     def read_data(self):
         ent_embedding = self.read_pickle(os.path.join(self.path_to_embedding, "ent_embedding.pickle"))
@@ -60,13 +60,14 @@ class FakeNewClassifier:
     def read_pickle(self, path):
         return pickle.load(open(path, "rb"))
 
-    def get_score_triple(self, triple):
-        vec = self.make_vector_for_triple(triple)
+    def get_score_triple(self, sentence):
+        vec = self.make_vector(sentence)
         distances, indices = self.nbrs.kneighbors([vec])
-        print(distances)
-        print(indices)
+        # print(distances)
+        # print(indices)
         scores = 1 - distances
-        score = scores[0]
+        score = scores[0][0]
+        print("Score: ", score)
         return score
 
     def average(self, lst):
@@ -75,11 +76,10 @@ class FakeNewClassifier:
         return sum(lst) / len(lst)
 
     def detect_fake_new(self, text):
-        triples = self.knExtraction.get_triples_from_text(text)
-        print("Triples: ", triples)
+        sentences = text.split(".")
         scores = []
-        for triple in triples:
-            scores.append(self.get_score_triple(triple))
+        for sentence in sentences:
+            scores.append(self.get_score_triple(sentence))
         return self.average(scores)
 
     def find_entity_sentence(self, text):
@@ -129,7 +129,8 @@ class FakeNewClassifier:
                 i += 1
                 vecs.append(np.zeros(vec_len))
         vec = np.concatenate(tuple(vecs), axis=None)
-        print(vec.shape)
+        # print(vec.shape)
         return vec
+
 
 fakeClf = FakeNewClassifier("/Users/vietnguyen/Workspace/Codes/Python/Knowledge-Graph-Intro/my_dataset/embeddings/TransE")

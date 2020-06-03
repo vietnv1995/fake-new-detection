@@ -73,6 +73,14 @@ class FakeNewClassifier:
             return 0
         return sum(lst) / len(lst)
 
+    # def detect_fake_new(self, text):
+    #     triples = self.knExtraction.get_triples_from_text(text)
+    #     print("Triples: ", triples)
+    #     scores = []
+    #     for triple in triples:
+    #         scores.append(self.get_score_triple(triple))
+    #     return self.average(scores)
+
     def detect_fake_new(self, text):
         triples = self.knExtraction.get_triples_from_text(text)
         print("Triples: ", triples)
