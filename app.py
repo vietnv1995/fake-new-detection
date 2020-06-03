@@ -23,7 +23,7 @@ def index():
                 return render_template("index.html", input_text=inputText, result="Trust", score=int(score*100))
             else:
                 return render_template("index.html", input_text=inputText, result="Fake", score=int((1-score)*100))
-        return render_template("index.html", result="Fake", score=int((1-score)*100))
+        return render_template("index.html", input_text=inputText, result="Fake", score=int((1-score)*100))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
