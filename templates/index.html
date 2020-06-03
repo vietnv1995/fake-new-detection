@@ -72,9 +72,9 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav hidden-xs">
-            <h2>Nhóm Sinh Viên</h2>
+            <h2>Nhóm 7</h2>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#section1">FakeNew Detection</a></li>
+                <li class="active"><a href="#section1">Fake News Detection</a></li>
 
             </ul>
             <br>
@@ -108,12 +108,12 @@
                     {% if result == "Trust" %}
                     <div class="well trust">
                         <h4>{{result}}</h4>
-                        <p>80%</p>
+                        <p>{{score}}%</p>
                     </div>
                     {% else %}
                     <div class="well fake">
                         <h4>{{result}}</h4>
-                        <p>80%</p>
+                        <p>{{score}}%</p>
                     </div>
                     {% endif %}
                 </div>
